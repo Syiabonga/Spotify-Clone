@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_14_061235) do
+ActiveRecord::Schema.define(version: 2020_04_14_062215) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -35,10 +35,12 @@ ActiveRecord::Schema.define(version: 2020_04_14_061235) do
 
   create_table "albums", force: :cascade do |t|
     t.string "title"
-    t.datetime "data"
+    t.datetime "date"
     t.integer "category_id", null: false
+    t.integer "artist_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["artist_id"], name: "index_albums_on_artist_id"
     t.index ["category_id"], name: "index_albums_on_category_id"
   end
 
@@ -90,11 +92,13 @@ ActiveRecord::Schema.define(version: 2020_04_14_061235) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "albums", "artists"
   add_foreign_key "albums", "categories"
   add_foreign_key "favorites", "users"
   add_foreign_key "recently_heards", "albums"
