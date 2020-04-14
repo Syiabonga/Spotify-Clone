@@ -1659,3 +1659,552 @@ Migrating to AddNameToUser (20200414062215)
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
   [1m[36mFavorite Create (0.3ms)[0m  [1m[32mINSERT INTO "favorites" ("user_id", "favoritable_type", "favoritable_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["user_id", 4], ["favoritable_type", "Album"], ["favoritable_id", 4], ["created_at", "2020-04-14 06:48:18.039785"], ["updated_at", "2020-04-14 06:48:18.039785"]]
   [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/" for 127.0.0.1 at 2020-04-14 02:18:36 -0500
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by HomeController#index as HTML
+Completed 401 Unauthorized in 16ms (ActiveRecord: 0.0ms | Allocations: 1216)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2020-04-14 02:18:36 -0500
+Processing by Devise::SessionsController#new as HTML
+  Rendering /home/leandro/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/devise-4.7.1/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/leandro/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/devise-4.7.1/app/views/devise/shared/_links.html.erb (Duration: 3.5ms | Allocations: 644)
+  Rendered /home/leandro/.rbenv/versions/2.6.1/lib/ruby/gems/2.6.0/gems/devise-4.7.1/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 27.5ms | Allocations: 3114)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 147ms (Views: 128.9ms | ActiveRecord: 1.2ms | Allocations: 28565)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2020-04-14 02:19:21 -0500
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"CSyoFZXXYz4ta43/xlgrwetwEx6bL4icZlmI3xl5pzc5pdhrghZzsx3DuXspU6zhJkX/Ej2eQT1l/7kKsmCpKQ==", "user"=>{"email"=>"freddie@mercury.com", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["email", "freddie@mercury.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Update (2.2ms)[0m  [1m[33mUPDATE "users" SET "remember_created_at" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["remember_created_at", "2020-04-14 07:19:21.314881"], ["updated_at", "2020-04-14 07:19:21.315685"], ["id", 1]]
+  [1m[35m (3.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 153ms (ActiveRecord: 6.1ms | Allocations: 11867)
+
+
+Started GET "/" for 127.0.0.1 at 2020-04-14 02:19:21 -0500
+Processing by HomeController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 0.8ms | Allocations: 87)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 15ms (Views: 9.4ms | ActiveRecord: 0.2ms | Allocations: 5660)
+
+
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 02:19:39 -0500
+Processing by Api::V1::DashboardController#index as JSON
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 31ms (ActiveRecord: 0.1ms | Allocations: 3983)
+
+
+  
+NoMethodError (undefined method `recently_heard' for #<User:0x000055750a2318e0>
+Did you mean?  recently_heards
+               recently_heards=
+               recently_heard_ids):
+  
+app/controllers/api/v1/dashboard_controller.rb:10:in `load_recent_heard'
+app/controllers/api/v1/dashboard_controller.rb:3:in `index'
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 02:20:28 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::DashboardController#index as JSON
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRecentlyHeard Load (0.2ms)[0m  [1m[34mSELECT "recently_heards".* FROM "recently_heards" WHERE "recently_heards"."user_id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["user_id", 1], ["LIMIT", 4]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.9ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCACHE Category Load (0.0ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+Completed 500 Internal Server Error in 393ms (ActiveRecord: 4.8ms | Allocations: 140746)
+
+
+  
+NameError (undefined local variable or method `heard_categories' for #<Api::V1::DashboardController:0x000055750b559a30>
+Did you mean?  heard_category):
+  
+app/controllers/api/v1/dashboard_controller.rb:15:in `load_recommendations'
+app/controllers/api/v1/dashboard_controller.rb:4:in `index'
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 02:20:47 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::DashboardController#index as JSON
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRecentlyHeard Load (0.3ms)[0m  [1m[34mSELECT "recently_heards".* FROM "recently_heards" WHERE "recently_heards"."user_id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["user_id", 1], ["LIMIT", 4]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mCategory Load (0.3ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCACHE Category Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+Completed 500 Internal Server Error in 414ms (ActiveRecord: 4.9ms | Allocations: 138043)
+
+
+  
+NameError (undefined local variable or method `recently_heard' for #<Api::V1::DashboardController:0x000055750b622d40>
+Did you mean?  @recent_albums):
+  
+app/controllers/api/v1/dashboard_controller.rb:16:in `load_recommendations'
+app/controllers/api/v1/dashboard_controller.rb:4:in `index'
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 02:24:15 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::DashboardController#index as JSON
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRecentlyHeard Load (0.3ms)[0m  [1m[34mSELECT "recently_heards".* FROM "recently_heards" WHERE "recently_heards"."user_id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["user_id", 1], ["LIMIT", 4]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.2ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.2ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.3ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCACHE Category Load (0.0ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  Rendering api/v1/dashboard/index.json.jbuilder
+  Rendered api/v1/dashboard/index.json.jbuilder (Duration: 32.9ms | Allocations: 2985)
+Completed 500 Internal Server Error in 111ms (ActiveRecord: 5.1ms | Allocations: 34377)
+
+
+  
+ActionView::Template::Error (undefined method `artist_name' for #<Album:0x00007f47a93c3a00>
+Did you mean?  artist):
+    1: json.recent_albums @recent_albums.each do |album|
+    2:     json.id album.id
+    3:     json.title album.title
+    4:     json.artist_name album.artist_name
+    5:     json.cover_url url.for(album.cover)
+    6: end
+    7: 
+  
+app/views/api/v1/dashboard/index.json.jbuilder:4
+app/views/api/v1/dashboard/index.json.jbuilder:1
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 02:24:56 -0500
+Processing by Api::V1::DashboardController#index as JSON
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRecentlyHeard Load (0.3ms)[0m  [1m[34mSELECT "recently_heards".* FROM "recently_heards" WHERE "recently_heards"."user_id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["user_id", 1], ["LIMIT", 4]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCACHE Category Load (0.0ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  Rendering api/v1/dashboard/index.json.jbuilder
+  [1m[36mArtist Load (0.3ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mAlbum Load (1.1ms)[0m  [1m[34mSELECT distinct albums.* FROM "albums" INNER JOIN "categories" ON "categories"."id" = "albums"."category_id" INNER JOIN "songs" ON "songs"."album_id" = "albums"."id" WHERE "albums"."categories" IN (?, ?, ?, ?) ORDER BY songs.played_count LIMIT ?[0m  [["categories", 1], ["categories", 1], ["categories", 2], ["categories", 4], ["LIMIT", 11]]
+  [1m[36mAlbum Load (2.6ms)[0m  [1m[34mSELECT distinct albums.* FROM "albums" INNER JOIN "categories" ON "categories"."id" = "albums"."category_id" INNER JOIN "songs" ON "songs"."album_id" = "albums"."id" WHERE "albums"."categories" IN (?, ?, ?, ?) ORDER BY songs.played_count LIMIT ?[0m  [["categories", 1], ["categories", 1], ["categories", 2], ["categories", 4], ["LIMIT", 11]]
+  Rendered api/v1/dashboard/index.json.jbuilder (Duration: 91.8ms | Allocations: 20802)
+Completed 500 Internal Server Error in 128ms (ActiveRecord: 6.3ms | Allocations: 30144)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `url' for #<#<Class:0x000055750a310630>:0x000055750a32f878>
+Did you mean?  URI):
+    2:     json.id album.id
+    3:     json.title album.title
+    4:     json.artist_name album.artist.name
+    5:     json.cover_url url.for(album.cover)
+    6: end
+    7: 
+    8: json.recommend_albums @recommend_albums.each do |album|
+  
+app/views/api/v1/dashboard/index.json.jbuilder:5
+app/views/api/v1/dashboard/index.json.jbuilder:1
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 02:25:17 -0500
+Processing by Api::V1::DashboardController#index as JSON
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRecentlyHeard Load (0.3ms)[0m  [1m[34mSELECT "recently_heards".* FROM "recently_heards" WHERE "recently_heards"."user_id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["user_id", 1], ["LIMIT", 4]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCACHE Category Load (0.0ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  Rendering api/v1/dashboard/index.json.jbuilder
+  [1m[36mArtist Load (0.1ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mAlbum Load (0.6ms)[0m  [1m[34mSELECT distinct albums.* FROM "albums" INNER JOIN "categories" ON "categories"."id" = "albums"."category_id" INNER JOIN "songs" ON "songs"."album_id" = "albums"."id" WHERE "albums"."categories" IN (?, ?, ?, ?) ORDER BY songs.played_count LIMIT ?[0m  [["categories", 1], ["categories", 1], ["categories", 2], ["categories", 4], ["LIMIT", 11]]
+  [1m[36mAlbum Load (2.8ms)[0m  [1m[34mSELECT distinct albums.* FROM "albums" INNER JOIN "categories" ON "categories"."id" = "albums"."category_id" INNER JOIN "songs" ON "songs"."album_id" = "albums"."id" WHERE "albums"."categories" IN (?, ?, ?, ?) ORDER BY songs.played_count LIMIT ?[0m  [["categories", 1], ["categories", 1], ["categories", 2], ["categories", 4], ["LIMIT", 11]]
+  Rendered api/v1/dashboard/index.json.jbuilder (Duration: 29.4ms | Allocations: 10874)
+Completed 500 Internal Server Error in 48ms (ActiveRecord: 4.6ms | Allocations: 20214)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `uri' for #<#<Class:0x00007f47a8921458>:0x00007f47a8e47ab8>
+Did you mean?  URI):
+    2:     json.id album.id
+    3:     json.title album.title
+    4:     json.artist_name album.artist.name
+    5:     json.cover_url uri.for(album.cover)
+    6: end
+    7: 
+    8: json.recommend_albums @recommend_albums.each do |album|
+  
+app/views/api/v1/dashboard/index.json.jbuilder:5
+app/views/api/v1/dashboard/index.json.jbuilder:1
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 02:25:41 -0500
+Processing by Api::V1::DashboardController#index as JSON
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRecentlyHeard Load (0.2ms)[0m  [1m[34mSELECT "recently_heards".* FROM "recently_heards" WHERE "recently_heards"."user_id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["user_id", 1], ["LIMIT", 4]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCACHE Category Load (0.0ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (1.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  Rendering api/v1/dashboard/index.json.jbuilder
+  [1m[36mArtist Load (0.1ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  Rendered api/v1/dashboard/index.json.jbuilder (Duration: 4.8ms | Allocations: 2438)
+Completed 500 Internal Server Error in 28ms (ActiveRecord: 2.2ms | Allocations: 11778)
+
+
+  
+ActionView::Template::Error (undefined method `for' for URI:Module):
+    2:     json.id album.id
+    3:     json.title album.title
+    4:     json.artist_name album.artist.name
+    5:     json.cover_url URI.for(album.cover)
+    6: end
+    7: 
+    8: json.recommend_albums @recommend_albums.each do |album|
+  
+app/views/api/v1/dashboard/index.json.jbuilder:5
+app/views/api/v1/dashboard/index.json.jbuilder:1
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 02:26:31 -0500
+Processing by Api::V1::DashboardController#index as JSON
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRecentlyHeard Load (0.3ms)[0m  [1m[34mSELECT "recently_heards".* FROM "recently_heards" WHERE "recently_heards"."user_id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["user_id", 1], ["LIMIT", 4]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.2ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.5ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.2ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCACHE Category Load (0.0ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  Rendering api/v1/dashboard/index.json.jbuilder
+  [1m[36mArtist Load (0.1ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mAlbum Load (0.6ms)[0m  [1m[34mSELECT distinct albums.* FROM "albums" INNER JOIN "categories" ON "categories"."id" = "albums"."category_id" INNER JOIN "songs" ON "songs"."album_id" = "albums"."id" WHERE "albums"."categories" IN (?, ?, ?, ?) ORDER BY songs.played_count LIMIT ?[0m  [["categories", 1], ["categories", 1], ["categories", 2], ["categories", 4], ["LIMIT", 11]]
+  [1m[36mAlbum Load (0.7ms)[0m  [1m[34mSELECT distinct albums.* FROM "albums" INNER JOIN "categories" ON "categories"."id" = "albums"."category_id" INNER JOIN "songs" ON "songs"."album_id" = "albums"."id" WHERE "albums"."categories" IN (?, ?, ?, ?) ORDER BY songs.played_count LIMIT ?[0m  [["categories", 1], ["categories", 1], ["categories", 2], ["categories", 4], ["LIMIT", 11]]
+  Rendered api/v1/dashboard/index.json.jbuilder (Duration: 26.4ms | Allocations: 10994)
+Completed 500 Internal Server Error in 55ms (ActiveRecord: 3.2ms | Allocations: 20335)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `url' for #<#<Class:0x000055750a6fe738>:0x000055750a727e58>
+Did you mean?  URI):
+    2:     json.id album.id
+    3:     json.title album.title
+    4:     json.artist_name album.artist.name
+    5:     json.cover_url url.for(album.cover)
+    6: end
+    7: 
+    8: json.recommend_albums @recommend_albums.each do |album|
+  
+app/views/api/v1/dashboard/index.json.jbuilder:5
+app/views/api/v1/dashboard/index.json.jbuilder:1
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 02:59:39 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::DashboardController#index as JSON
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRecentlyHeard Load (0.2ms)[0m  [1m[34mSELECT "recently_heards".* FROM "recently_heards" WHERE "recently_heards"."user_id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["user_id", 1], ["LIMIT", 4]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.2ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCACHE Category Load (0.0ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  Rendering api/v1/dashboard/index.json.jbuilder
+  [1m[36mArtist Load (0.2ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mCACHE Artist Load (0.1ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mArtist Load (0.4ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 9], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 38], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mArtist Load (0.1ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 14], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 60], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mAlbum Load (2.3ms)[0m  [1m[34mSELECT distinct albums.* FROM "albums" INNER JOIN "categories" ON "categories"."id" = "albums"."category_id" INNER JOIN "songs" ON "songs"."album_id" = "albums"."id" WHERE "albums"."categories" IN (?, ?, ?, ?) ORDER BY songs.played_count LIMIT ?[0m  [["categories", 1], ["categories", 1], ["categories", 2], ["categories", 4], ["LIMIT", 12]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:8
+  Rendered api/v1/dashboard/index.json.jbuilder (Duration: 101.1ms | Allocations: 31166)
+Completed 500 Internal Server Error in 120ms (ActiveRecord: 7.4ms | Allocations: 40569)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: no such column: albums.categories):
+     5:     json.cover_url url_for(album.cover)
+     6: end
+     7: 
+     8: json.recommend_albums @recommend_albums.each do |album|
+     9:     json.id album.id
+    10:     json.title album.title
+    11:     json.artist_name album.artist.name
+  
+app/views/api/v1/dashboard/index.json.jbuilder:8
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 03:02:38 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by Api::V1::DashboardController#index as JSON
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRecentlyHeard Load (0.2ms)[0m  [1m[34mSELECT "recently_heards".* FROM "recently_heards" WHERE "recently_heards"."user_id" = ? ORDER BY created_at DESC LIMIT ?[0m  [["user_id", 1], ["LIMIT", 4]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.2ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.4ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.2ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mAlbum Load (0.1ms)[0m  [1m[34mSELECT "albums".* FROM "albums" WHERE "albums"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:10:in `map'
+  [1m[36mCategory Load (0.4ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCACHE Category Load (0.0ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/dashboard_controller.rb:14:in `map'
+  Rendering api/v1/dashboard/index.json.jbuilder
+  [1m[36mArtist Load (0.1ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mCACHE Artist Load (0.0ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mArtist Load (0.2ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 9], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 38], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mArtist Load (0.2ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:4
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 14], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 60], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:5
+  [1m[36mAlbum Load (0.5ms)[0m  [1m[34mSELECT distinct albums.* FROM "albums" INNER JOIN "categories" ON "categories"."id" = "albums"."category_id" INNER JOIN "songs" ON "songs"."album_id" = "albums"."id" WHERE "albums"."category_id" IN (?, ?, ?, ?) ORDER BY songs.played_count LIMIT ?[0m  [["category_id", 1], ["category_id", 1], ["category_id", 2], ["category_id", 4], ["LIMIT", 12]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:8
+  [1m[36mArtist Load (0.1ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 4], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE Artist Load (0.0ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 3], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mArtist Load (0.2ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 7], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 31], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE Artist Load (0.0ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mCACHE ActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE ActiveStorage::Blob Load (0.0ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mArtist Load (0.1ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 11], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 49], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE Artist Load (0.1ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mCACHE ActiveStorage::Attachment Load (0.0ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 9], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE ActiveStorage::Blob Load (0.0ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 38], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE Artist Load (0.0ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mCACHE ActiveStorage::Attachment Load (0.0ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 14], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE ActiveStorage::Blob Load (0.0ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 60], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE Artist Load (0.0ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 8], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mActiveStorage::Blob Load (0.6ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 34], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE Artist Load (0.0ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 5], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 22], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE Artist Load (0.0ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 12], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 54], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE Artist Load (0.1ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mCACHE ActiveStorage::Attachment Load (0.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mCACHE ActiveStorage::Blob Load (0.0ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mArtist Load (0.2ms)[0m  [1m[34mSELECT "artists".* FROM "artists" WHERE "artists"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:11
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 6], ["record_type", "Album"], ["name", "cover"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  ↳ app/views/api/v1/dashboard/index.json.jbuilder:12
+  Rendered api/v1/dashboard/index.json.jbuilder (Duration: 180.6ms | Allocations: 62978)
+Completed 200 OK in 267ms (Views: 172.0ms | ActiveRecord: 18.0ms | Allocations: 93062)
+
+
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 03:02:54 -0500
+Processing by Api::V1::DashboardController#index as JSON
+Completed 401 Unauthorized in 1ms (ActiveRecord: 0.0ms | Allocations: 193)
+
+
+Started GET "/api/v1/dashboard" for 127.0.0.1 at 2020-04-14 03:15:55 -0500
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::DashboardController#index as JSON
+  Parameters: {"title"=>"Nigeria is the richest country in the world", "description"=>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Euismod quis viverra nibh cras pulvinar. Dolor sit amet consectetur adipiscing elit pellentesque. Aliquet lectus proin nibh nisl condimentum id. Commodo sed egestas egestas fringilla.", "country_id"=>2, "dashboard"=>{"title"=>"Nigeria is the richest country in the world", "description"=>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Euismod quis viverra nibh cras pulvinar. Dolor sit amet consectetur adipiscing elit pellentesque. Aliquet lectus proin nibh nisl condimentum id. Commodo sed egestas egestas fringilla.", "country_id"=>2}}
+Completed 401 Unauthorized in 25ms (ActiveRecord: 0.0ms | Allocations: 1123)
+
+
+Started GET "/api/v1/categories" for 127.0.0.1 at 2020-04-14 03:16:16 -0500
+Processing by Api::V1::CategoriesController#index as JSON
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? ORDER BY "users"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering api/v1/categories/index.json.jbuilder
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories"[0m
+  ↳ app/views/api/v1/categories/index.json.jbuilder:2
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 1], ["record_type", "Category"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/categories/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/api/v1/categories/index.json.jbuilder:5
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 2], ["record_type", "Category"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/categories/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.2ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/api/v1/categories/index.json.jbuilder:5
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 3], ["record_type", "Category"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/categories/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.3ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/views/api/v1/categories/index.json.jbuilder:5
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = ? AND "active_storage_attachments"."record_type" = ? AND "active_storage_attachments"."name" = ? LIMIT ?[0m  [["record_id", 4], ["record_type", "Category"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/api/v1/categories/index.json.jbuilder:5
+  [1m[36mActiveStorage::Blob Load (0.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/views/api/v1/categories/index.json.jbuilder:5
+  Rendered api/v1/categories/index.json.jbuilder (Duration: 76.9ms | Allocations: 28687)
+Completed 200 OK in 103ms (Views: 77.2ms | ActiveRecord: 5.1ms | Allocations: 40796)
+
+
