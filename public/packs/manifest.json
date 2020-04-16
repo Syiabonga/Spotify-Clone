@@ -9,6 +9,16 @@
       "js.map": [
         "/packs/js/application-bbe9c4a129ab949e0636.js.map"
       ]
+    },
+    "spotcode": {
+      "js": [
+        "/packs/js/spotcode-fe2500ac8c1226f5924f.js"
+      ],
+      "js.map": [
+        "/packs/js/spotcode-fe2500ac8c1226f5924f.js.map"
+      ]
     }
-  }
+  },
+  "spotcode.js": "/packs/js/spotcode-fe2500ac8c1226f5924f.js",
+  "spotcode.js.map": "/packs/js/spotcode-fe2500ac8c1226f5924f.js.map"
 }
